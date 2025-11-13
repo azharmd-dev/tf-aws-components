@@ -4,19 +4,12 @@ resource "aws_instance" "main" {
       vpc_security_group_ids = [local.sg_id]
       instance_type = local.instance_type
       subnet_id = local.private_subnet_id
-      iam_instance_profile   = aws_iam_instance_profile.bastion.name
-
       tags = merge(
         local.common_tags,
         {
           Name  = "${local.common_name_suffix}-${var.component}"
         }
       )
-}
-
-resource "aws_iam_instance_profile" "bastion" {
-  name = "bastion"
-  role = "BastionTerraformAdmin"
 }
 
 #configuration using anisble roles
